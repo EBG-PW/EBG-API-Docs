@@ -17,4 +17,4 @@ Error Code | Meaning
 406 | Not Acceptable -- You requested a format that isn't json.
 429 | Too Many Requests -- You run into the maximum requests for a plugin.
 500 | Internal Server Error -- We had a problem with our server. Try again later.
-503 | Service Unavailable -- We're temporarily offline for maintenance. Please try again later.
+503 | Service Unavailable -- Some backend software isn´t responding. Please try again later.
