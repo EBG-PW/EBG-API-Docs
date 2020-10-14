@@ -23,7 +23,7 @@ Below you will find all official EBG plugins for our API.
 
 # Contacs
 
-## Contacs Query Parameters
+## POST new contace request
 
 ```javascript
 const Joi = require('joi');
@@ -44,8 +44,6 @@ email | true | String | The users email.
 category | true | Number | Category or the request.
 person | true | Number | Determines who should process this request.
 message | true | String | Short text of the request.
-
-## Place a contact request
 
 ```javascript
 const axios = require('axios');
@@ -92,4 +90,154 @@ Returns <code>400</code>.
 
 <aside class="notice">
 API Limit is 5 requests per 15 minuts per IP. Invalid requests also count to this value!
+</aside>
+
+# Serverstatus
+
+## GET all stats
+
+```javascript
+const Joi = require('joi');
+
+const GetSchema = Joi.object({
+    name: Joi.string().trim(),
+    type: Joi.string().trim(),
+    Country: Joi.string().trim(),
+    limit: Joi.number()
+});
+```
+
+Parameter | Required | Type | Description
+--------- | -------- | ---- | -----------
+name | false | String | Filter servers by name.
+type | false | String | Filter servers by type.
+Country | false | String | Filter servers by country.
+limit | false | Number | Limit the results.
+
+
+```javascript
+const axios = require('axios');
+
+axios.get('/serverstatus?limit=1')
+  .then(function (response) {
+    // handle success
+    console.log(response);
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "timespamp":"1602445037",
+  "servers":[
+    {
+    "name":"SRV-OWL-01",
+    "type":"Dedicated",
+    "host":"ANSF",
+    "location":"AT - Linz",
+    "online4":true,
+    "online6":false,
+    "uptime":"30 days",
+    "load":0,
+    "network_rx":14747, //In bit/s
+    "network_tx":265446, //In bit/s
+    "cpu":0, //IN % of total CPU (0-100)
+    "memory_total":100496656, //In KB
+    "memory_used":38702832, //In KB
+    "swap_total":115176720, //In KB
+    "swap_used":39049380, //In KB
+    "hdd_total":3528493, //In MB
+    "hdd_used":847982, //In MB
+    "custom":""
+    }
+  ]
+}
+```
+
+### HTTP Request
+
+`GET https://api.ebg.pw/api/v1/serverstatus`
+
+<aside class="success">
+Returns <code>200</code> and a json.
+</aside>
+
+<aside class="warning">
+Returns <code>503</code>. When that happens the API can´t find stats.json
+</aside>
+
+<aside class="notice">
+API Limit is 60 requests per 1 minut per IP. Invalid requests also count to this value!
+</aside>
+
+## GET overview stats
+
+```javascript
+const Joi = require('joi');
+
+const GetSchemaNow = Joi.object({
+    all: Joi.boolean()
+});
+```
+
+Parameter | Required | Type | Description
+--------- | -------- | ---- | -----------
+all | false | bool | If true, it will return all devices including personal pcs
+
+```javascript
+const axios = require('axios');
+
+axios.get('/serverstatus/now')
+  .then(function (response) {
+    // handle success
+    console.log(response);
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "timespamp":"1602445037",
+  "online":"10", //10 Servers are online
+  "offline":"2", //2 Servers are offline
+  "hardware":
+    {
+    "CPUtotal":1000, //10 servers are running right now, 1000% is max
+    "CPUused":"117.00", //Usage of all 10 Servers with the limit above
+    "RAMtotal":426243164, //In KB
+    "RAMused":164287376, //In KB
+    "DISKtotal":22038787, //In MB
+    "DISKused":12604126, //In MB
+    "NETrx":122390, //In bit/s
+    "NETtx":66168} //In bit/s
+    },
+  "onlineservers":"[]", //List of all servers that are online
+  "offlineservers":"[]" //List of all servers that are offline
+}
+```
+
+### HTTP Request
+
+`GET https://api.ebg.pw/api/v1/serverstatus/now`
+
+<aside class="success">
+Returns <code>200</code> and a json.
+</aside>
+
+<aside class="warning">
+Returns <code>503</code>. When that happens the API can´t find stats.json
+</aside>
+
+<aside class="notice">
+API Limit is 60 requests per 1 minut per IP. Invalid requests also count to this value!
 </aside>
