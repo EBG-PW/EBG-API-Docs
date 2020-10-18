@@ -172,7 +172,7 @@ Returns <code>503</code>. When that happens the API can´t find stats.json
 </aside>
 
 <aside class="notice">
-API Limit is 60 requests per 1 minut per IP. Invalid requests also count to this value!
+API Limit is 60 requests per 1 minute per IP. Invalid requests also count to this value!
 </aside>
 
 ## GET overview stats
