@@ -188,6 +188,7 @@ const GetSchemaNow = Joi.object({
 Parameter | Required | Type | Description
 --------- | -------- | ---- | -----------
 all | false | bool | If true, it will return all devices including personal pcs
+bundle | false | bool | If true, all WCG servers will be displayed as one
 
 ```javascript
 const axios = require('axios');
