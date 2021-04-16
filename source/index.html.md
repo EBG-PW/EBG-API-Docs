@@ -315,7 +315,7 @@ axios.post('/MSH-ConfigGenerator/2-3-3', {
 
 ### HTTP Request
 
-`POST https://api.ebg.pw/api/v1/MSH-ConfigGenerator/2-3-3`
+`GET https://api.ebg.pw/api/v1/MSH-ConfigGenerator/2-3-3`
 
 <aside class="success">
 Returns <code>200</code> and a json File to download.
