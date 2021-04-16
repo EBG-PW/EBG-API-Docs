@@ -242,3 +242,89 @@ Returns <code>503</code>. When that happens the API can´t find stats.json
 <aside class="notice">
 API Limit is 60 requests per 1 minut per IP. Invalid requests also count to this value!
 </aside>
+
+# MSH-ConfigGenerator
+
+## MSH v2.3.3
+
+```javascript
+const Joi = require('joi');
+
+const GetSchema = Joi.object({
+	FileName: Joi.string().max(128).required().regex(/^[a-z\d\s\-\.\,\ä\ü\ö\ß\&]*$/i),
+	ServerType: Joi.string().max(32).required().regex(/^[a-z\d\s\-\.\,\ä\ü\ö\ß\&]*$/i),
+	Version: Joi.string().max(16).required().regex(/^[0-9\-\.]*$/),
+	RAM: Joi.number().max(524288).required(),
+	Port: Joi.number().max(65535).required()
+})
+```
+
+This config generator only works for FULL RELEASES of minecraft.  
+This is for MSH version 2.3.3
+
+Parameter | Required | Type | Description
+--------- | -------- | ---- | -----------
+FileName | true | String | The name of the minecraft server jar
+ServerType | true | String | Paper/Forge/Vanilla/...
+Version | true | String | Version of minecraft.
+RAM | true | Number | Memory for the minecraft server.
+Port | true | Number | Port the MSH-Server should lisen.
+
+```javascript
+const axios = require('axios');
+
+axios.post('/MSH-ConfigGenerator/2-3-3', {
+  FileName: "server.jar",
+	ServerType: "Paper",
+	Version: "1.16.5",
+	RAM: 1024,
+	Port: 25565
+  })
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+```
+
+> The above command returns a JSON File as download structured like this:
+
+```json
+{
+  "Server":{
+    "Folder":"./",
+    "FileName":"server.jar",
+    "Protocol":"754",
+    "Version":"EBG.PW 1.16.5"
+  },"Commands":{
+    "StartServer":"java -Xmx2048M -Xms128M -jar serverFileName nogui",
+    "StopServer":"stop",
+    "StopServerForce":"stop"
+  },"Msh":{
+    "CheckForUpdates":true,
+      "Debug":false,
+    "HibernationInfo":"                   &fserver status:\n                   &b&lHIBERNATING",
+    "Port":"25565",
+    "StartingInfo":"                   &fserver status:\n                    &6&lWARMING UP",
+    "TimeBeforeStoppingEmptyServer":60
+  }
+}
+
+```
+
+### HTTP Request
+
+`POST https://api.ebg.pw/api/v1/MSH-ConfigGenerator/2-3-3`
+
+<aside class="success">
+Returns <code>200</code> and a json File to download.
+</aside>
+
+<aside class="warning">
+Returns <code>400</code>.
+</aside>
+
+<aside class="notice">
+API Limit is 265 requests per 1 minute per IP. Invalid requests also count to this value!
+</aside>
