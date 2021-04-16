@@ -255,7 +255,8 @@ const GetSchema = Joi.object({
 	ServerType: Joi.string().max(32).required().regex(/^[a-z\d\s\-\.\,\ä\ü\ö\ß\&]*$/i),
 	Version: Joi.string().max(16).required().regex(/^[0-9\-\.]*$/),
 	RAM: Joi.number().max(524288).required(),
-	Port: Joi.number().max(65535).required()
+	Port: Joi.number().max(65535).required(),
+	StopTime: Joi.number().max(86400).required()
 })
 ```
 
@@ -269,6 +270,7 @@ ServerType | true | String | Paper/Forge/Vanilla/...
 Version | true | String | Version of minecraft.
 RAM | true | Number | Memory for the minecraft server.
 Port | true | Number | Port the MSH-Server should lisen.
+StopTime | true | Number | Time to wait with 0 players befor shotdown
 
 ```javascript
 const axios = require('axios');
@@ -278,7 +280,8 @@ axios.post('/MSH-ConfigGenerator/2-3-3', {
 	ServerType: "Paper",
 	Version: "1.16.5",
 	RAM: 1024,
-	Port: 25565
+	Port: 25565,
+  StopTime: 120
   })
   .then(function (response) {
     console.log(response);
@@ -307,7 +310,7 @@ axios.post('/MSH-ConfigGenerator/2-3-3', {
     "HibernationInfo":"                   &fserver status:\n                   &b&lHIBERNATING",
     "Port":"25565",
     "StartingInfo":"                   &fserver status:\n                    &6&lWARMING UP",
-    "TimeBeforeStoppingEmptyServer":60
+    "TimeBeforeStoppingEmptyServer":120
   }
 }
 
