@@ -269,8 +269,8 @@ FileName | true | String | The name of the minecraft server jar
 ServerType | true | String | Paper/Forge/Vanilla/...
 Version | true | String | Version of minecraft.
 RAM | true | Number | Memory for the minecraft server.
-Port | true | Number | Port the MSH-Server should lisen.
-StopTime | true | Number | Time to wait with 0 players befor shotdown
+Port | true | Number | Port the MSH-Server should listen.
+StopTime | true | Number | Time to wait with 0 players befor shutdown
 
 ```javascript
 const axios = require('axios');
